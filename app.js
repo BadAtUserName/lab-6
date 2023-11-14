@@ -40,7 +40,7 @@ let seattle = {
     for (let i = 0; i < hours.length; i++){
   //let customers = generateCustomers(this.minCusty, this.maxCusty);
       let cookies = (this.averageCookieBought * this.getNumber());
-      console.log(cookies)
+      //console.log(cookies)
       this.cookiesTotal += cookies
       console.log(this.cookiesTotal) 
   //stick each random cookie number with a time 
