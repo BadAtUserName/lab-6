@@ -40,7 +40,7 @@ let seattle = {
   //let customers = generateCustomers(this.minCusty, this.maxCusty);
       let cookies = (this.averageCookieBought * this.getNumber());
       console.log(cookies)
-      this.cookiesTotal += cookies
+      this.cookiesTotal.toFixed(2) += cookies
       console.log(this.cookiesTotal) 
   //stick each random cookie number with a time 
       this.cookiesSold.push(cookies.toFixed(2)) 
@@ -92,7 +92,7 @@ let tokyo = {
   //let customers = generateCustomers(this.minCusty, this.maxCusty);
       let cookies = (this.averageCookieBought * this.getNumber());
       console.log(cookies)
-      this.cookiesTotal += cookies
+      this.cookiesTotal.toFixed(2) += cookies
       console.log(this.cookiesTotal) 
   //stick each random cookie number with a time 
       this.cookiesSold.push(cookies.toFixed(2)) 
@@ -143,7 +143,7 @@ let dubai = {
   //let customers = generateCustomers(this.minCusty, this.maxCusty);
       let cookies = (this.averageCookieBought * this.getNumber());
       console.log(cookies)
-      this.cookiesTotal += cookies
+      this.cookiesTotal.toFixed(2) += cookies
       console.log(this.cookiesTotal) 
   //stick each random cookie number with a time 
       this.cookiesSold.push(cookies.toFixed(2)) 
@@ -194,7 +194,7 @@ let paris = {
   //let customers = generateCustomers(this.minCusty, this.maxCusty);
       let cookies = (this.averageCookieBought * this.getNumber());
       console.log(cookies)
-      this.cookiesTotal += cookies
+      this.cookiesTotal.toFixed(2) += cookies
       console.log(this.cookiesTotal) 
   //stick each random cookie number with a time 
       this.cookiesSold.push(cookies.toFixed(2)) 
@@ -245,7 +245,7 @@ let lima = {
   //let customers = generateCustomers(this.minCusty, this.maxCusty);
       let cookies = (this.averageCookieBought * this.getNumber());
       console.log(cookies)
-      this.cookiesTotal += cookies
+      this.cookiesTotal.toFixed(2) += cookies
       console.log(this.cookiesTotal) 
   //stick each random cookie number with a time 
       this.cookiesSold.push(cookies.toFixed(2)) 
