@@ -1,4 +1,5 @@
 'use strict';
+//I redid a bunch of my code from watching the code-review video just putting it in as a ref
 //The minimum number of customers per hour.
 //The maximum number of customers per hour.
 //The average number of cookies purchased per customer.
