@@ -15,8 +15,137 @@
 // 5. Display the values of each array as unordered lists in the browser.
 
 // 6. Calculating the sum of these hourly totals; your output for each location should look like this:
-let hours = ['6am', '7am', '8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm', '7pm'];
+let hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
 
+// *** Global variables
+const locationArray = [];
+
+//*** Helper Function/Utilites
+function renderAll(table) {
+  for (let i = 0; i < locationArray.length; i++) {
+    locationArray[i].render(table);
+  }
+}
+
+// Header  functions
+function headerFunction(table) {
+
+  let headerRow = document.createElement('tr');
+  table.appendChild(headerRow);
+
+  let cell = document.createElement('th');
+  headerRow.appendChild(cell);
+
+  for (let i = 0; i < hours.length; i++) {
+    let headerCell = document.createElement('th');
+    headerCell.textContent = hours[i];
+    headerRow.appendChild(headerCell);
+  }
+  let totalsHeaderCell = document.createElement('th');
+  totalsHeaderCell.textContent = 'Daily Location Totals';
+  headerRow.appendChild(totalsHeaderCell)
+}
+
+
+// footer function
+function footerFunction(table) {
+  let footerRow = document.createElement('tr');
+  table.appendChild(footerRow);
+
+  let cell = document.createElement('td');
+  cell.textConent = 'Totals';
+  footerRow.appendChild(cell);
+
+  for (let i = 0; i < hours.length + 1; i++) {
+    let cell = document.createElement('td');
+    cell.textContent = 'Things are here'
+    footerRow.appendChild(cell);
+  }
+
+  table.appendChild(footerRow);
+}
+
+//footerFunction(table);
+
+// *** Constuctor Function***
+function Location(name, minCusty, maxCusty, averageCookieBought, customerNumber) {
+  this.name = name;
+  this.minCusty = minCusty;
+  this.maxCusty = maxCusty;
+  this.averageCookieBought = averageCookieBought;
+  this.customerNumber = customerNumber;
+  this.cookiesSold = [];
+  this.cookiesTotal = 0
+}
+
+//***Prototype function***
+Location.prototype.generateCustomers = function (min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+};
+
+Location.prototype.getNumber = function () {
+  this.customerNumber = this.generateCustomers(this.minCusty, this.maxCusty);
+  return this.customerNumber;
+};
+
+Location.prototype.render = function (table) {
+  for (let i = 0; i < hours.length; i++) {
+    //let customers = generateCustomers(this.minCusty, this.maxCusty);
+    let cookies = (this.averageCookieBought * this.getNumber());
+    //console.log(cookies)
+    this.cookiesTotal += cookies;
+    //console.log(this.cookiesTotal) 
+    //stick each random cookie number with a time 
+    this.cookiesSold.push(Math.ceil(cookies))
+  }
+  // row for location
+  let locationRow = document.createElement('tr');
+
+  let name = document.createElement("td");
+  name.textContent = this.name;
+  locationRow.appendChild(name);
+
+  for (let i = 0; i < hours.length; i++) {
+    for (let j = 0; j < locationArray.length; j++) {
+      console.log(locationArray[j].name)
+      console.log('location array is:', locationArray)
+      let cookiesThisHour = locationArray[j].cookiesSold[i];
+      console.log('i is',i)
+      console.log(cookiesThisHour)
+    }
+    let tableItem = document.createElement('td');
+    let content = `${this.cookiesSold[i]}`;
+    tableItem.innerText = content;
+    locationRow.appendChild(tableItem);
+  }
+
+  let cookiesTotal = document.createElement('td');
+  cookiesTotal.textContent = `${Math.floor(this.cookiesTotal)}
+    `;
+
+  locationRow.appendChild(cookiesTotal);
+  table.appendChild(locationRow);
+
+};
+//*** Executable code
+let seattle = new Location('Seattle', 23, 65, 6.3, 0, [], 0);
+let tokyo = new Location('Tokyo', 2, 24, 1.2, 0, [], 0);
+let dubai = new Location('Dubai', 11, 38, 3.7, 0, [], 0);
+let paris = new Location('Paris', 20, 38, 2.3, 0, [], 0);
+let lima = new Location('Lima', 2, 16, 4.6, 0, [], 0);
+
+locationArray.push(seattle, tokyo, dubai, paris, lima);
+
+let table = document.createElement('table');
+salesdata.appendChild(table);
+console.log(locationArray)
+headerFunction(table);
+
+renderAll(table);
+
+footerFunction(table)
+/*
+// ** object literals***
 let seattle = {
   name: 'Seattle',
   minCusty: 23,
@@ -25,7 +154,7 @@ let seattle = {
   customerNumber: 0,
   cookiesSold: [],
   cookiesTotal: 0,
-  //random cookie generator 
+  //random cookie generator
   generateCustomers: function(min, max){
     return Math.floor(Math.random() * (max - min +1) + min)//inclusive of min max
   },
@@ -42,9 +171,9 @@ let seattle = {
       let cookies = (this.averageCookieBought * this.getNumber());
       //console.log(cookies)
       this.cookiesTotal += cookies
-      console.log(this.cookiesTotal) 
-  //stick each random cookie number with a time 
-      this.cookiesSold.push(cookies.toFixed(2)) 
+      console.log(this.cookiesTotal)
+  //stick each random cookie number with a time
+      this.cookiesSold.push(cookies.toFixed(2))
   }
   console.log(this.cookiesSold)
 
@@ -77,7 +206,7 @@ let tokyo = {
   customerNumber: 0,
   cookiesSold: [],
   cookiesTotal: 0,
-  //random cookie generator 
+  //random cookie generator
   generateCustomers: function(min, max){
     return Math.floor(Math.random() * (max - min +1) + min)//inclusive of min max
   },
@@ -94,9 +223,9 @@ let tokyo = {
       let cookies = (this.averageCookieBought * this.getNumber());
       console.log(cookies)
       this.cookiesTotal += cookies
-      console.log(this.cookiesTotal) 
-  //stick each random cookie number with a time 
-      this.cookiesSold.push(cookies.toFixed(2)) 
+      console.log(this.cookiesTotal)
+  //stick each random cookie number with a time
+      this.cookiesSold.push(cookies.toFixed(2))
   }
   console.log(this.cookiesSold)
 
@@ -128,7 +257,7 @@ let dubai = {
   customerNumber: 0,
   cookiesSold: [],
   cookiesTotal: 0,
-  //random cookie generator 
+  //random cookie generator
   generateCustomers: function(min, max){
     return Math.floor(Math.random() * (max - min +1) + min)//inclusive of min max
   },
@@ -145,9 +274,9 @@ let dubai = {
       let cookies = (this.averageCookieBought * this.getNumber());
       console.log(cookies)
       this.cookiesTotal += cookies
-      console.log(this.cookiesTotal) 
-  //stick each random cookie number with a time 
-      this.cookiesSold.push(cookies.toFixed(2)) 
+      console.log(this.cookiesTotal)
+  //stick each random cookie number with a time
+      this.cookiesSold.push(cookies.toFixed(2))
   }
   console.log(this.cookiesSold)
 
@@ -179,7 +308,7 @@ let paris = {
   customerNumber: 0,
   cookiesSold: [],
   cookiesTotal: 0,
-  //random cookie generator 
+  //random cookie generator
   generateCustomers: function(min, max){
     return Math.floor(Math.random() * (max - min +1) + min)//inclusive of min max
   },
@@ -196,9 +325,9 @@ let paris = {
       let cookies = (this.averageCookieBought * this.getNumber());
       console.log(cookies)
       this.cookiesTotal += cookies
-      console.log(this.cookiesTotal) 
-  //stick each random cookie number with a time 
-      this.cookiesSold.push(cookies.toFixed(2)) 
+      console.log(this.cookiesTotal)
+  //stick each random cookie number with a time
+      this.cookiesSold.push(cookies.toFixed(2))
   }
   console.log(this.cookiesSold)
 
@@ -230,7 +359,7 @@ let lima = {
   customerNumber: 0,
   cookiesSold: [],
   cookiesTotal: 0,
-  //random cookie generator 
+  //random cookie generator
   generateCustomers: function(min, max){
     return Math.floor(Math.random() * (max - min +1) + min)//inclusive of min max
   },
@@ -247,9 +376,9 @@ let lima = {
       let cookies = (this.averageCookieBought * this.getNumber());
       console.log(cookies)
       this.cookiesTotal.toFixed(2) += cookies
-      console.log(this.cookiesTotal) 
-  //stick each random cookie number with a time 
-      this.cookiesSold.push(cookies.toFixed(2)) 
+      console.log(this.cookiesTotal)
+  //stick each random cookie number with a time
+      this.cookiesSold.push(cookies.toFixed(2))
   }
   console.log(this.cookiesSold)
 
@@ -273,8 +402,11 @@ let lima = {
   unorderedList.appendChild(cookiesTotal)
 }
 }
-seattle.render();
+*/
+/*seattle.render();
 tokyo.render();
 dubai.render();
 paris.render();
-lima.render();
+lima.render();*/
+
+//headerFunction();
