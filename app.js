@@ -58,7 +58,14 @@ function footerFunction(table) {
 
   for (let i = 0; i < hours.length + 1; i++) {
     let cell = document.createElement('td');
-    cell.textContent = 'Things are here'
+    let hourlyCookiesTotal = 0;
+    hourlyCookiesTotal += locationArray[0].cookiesSold[i];
+    hourlyCookiesTotal += locationArray[1].cookiesSold[i];
+    hourlyCookiesTotal += locationArray[2].cookiesSold[i];
+    hourlyCookiesTotal += locationArray[3].cookiesSold[i];
+    hourlyCookiesTotal += locationArray[4].cookiesSold[i];
+    
+    cell.textContent = hourlyCookiesTotal;
     footerRow.appendChild(cell);
   }
 
@@ -87,17 +94,21 @@ Location.prototype.getNumber = function () {
   this.customerNumber = this.generateCustomers(this.minCusty, this.maxCusty);
   return this.customerNumber;
 };
-
-Location.prototype.render = function (table) {
+Location.prototype.generateCookies = function () {
   for (let i = 0; i < hours.length; i++) {
     //let customers = generateCustomers(this.minCusty, this.maxCusty);
     let cookies = (this.averageCookieBought * this.getNumber());
+  
     //console.log(cookies)
     this.cookiesTotal += cookies;
     //console.log(this.cookiesTotal) 
     //stick each random cookie number with a time 
     this.cookiesSold.push(Math.ceil(cookies))
   }
+}
+
+Location.prototype.render = function (table) {
+
   // row for location
   let locationRow = document.createElement('tr');
 
@@ -140,6 +151,13 @@ let table = document.createElement('table');
 salesdata.appendChild(table);
 console.log(locationArray)
 headerFunction(table);
+
+// Generate cookies first
+seattle.generateCookies();
+tokyo.generateCookies();
+dubai.generateCookies();
+paris.generateCookies();
+lima.generateCookies();
 
 renderAll(table);
 
