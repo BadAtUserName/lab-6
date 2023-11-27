@@ -1,6 +1,8 @@
-header {
-  display: flex;
-  justify-content: center;
-  background-color: black;
-  color: salmon;
+
+table,th, td {
+  background-color: salmon;
+  border: 1px solid;
+  border-collapse: collapse ;
+  border-color: black;
+  
 }
