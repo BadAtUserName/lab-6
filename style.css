@@ -24,14 +24,8 @@ main img {
   margin-right: auto;
   width: 75%;
 }
-/*main {
-  display: flex;
-  justify-content: center;
-}*/
-.LocationList{
-  /* flex-direction: column;
-  justify-content: flex-start;
-  align-content: flex-end; */
+
+.LocationList {
   margin: 3em;
 }
 table,th, td {
@@ -40,4 +34,10 @@ table,th, td {
   border-collapse: collapse ;
   border-color: black;
   
+}
+#cookiesForm{
+display: block;
+margin-top: 40px;
+margin-left: 40px;
+margin-right: 40px;
 }
