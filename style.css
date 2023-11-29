@@ -1,0 +1,50 @@
+header{
+  background-color: black;
+  color: salmon;
+  /* display: flex; */
+  justify-content: center;
+}
+nav ul{
+  /* display: flex; */
+  /* flex-direction:row; */
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  background-color: salmon;
+}
+nav ul li {
+  display: inline-block; 
+  padding: 1em 0;
+  text-align: center;
+  width: 100px;
+}
+main img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+}
+
+.LocationList {
+  margin: 3em;
+}
+table,th, td {
+  background-color: salmon;
+  border: 1px solid;
+  border-collapse: collapse ;
+  border-color: black;
+  
+}
+#cookiesForm{
+display: block;
+margin-top: 40px;
+margin-left: 40px;
+margin-right: 40px;
+}
+
+NavPg2 {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  background-color: salmon;
+}
