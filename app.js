@@ -51,22 +51,32 @@ function headerFunction(table) {
 function footerFunction(table) {
 
   let footerRow = document.createElement('tr');
+  
   table.appendChild(footerRow);
 
+  // Add row label
   let cell = document.createElement('td');
-  cell.textConent = 'Totals';
+  cell.textContent = 'Totals';
   footerRow.appendChild(cell);
 
-  for (let i = 0; i < hours.length + 1; i++) {
+  let allHoursTotal = 0;
+
+  // make hour totals
+  for (let i = 0; i < hours.length; i++) {
     let cell = document.createElement('td');
     let hourlyCookiesTotal = 0;
     for (let j = 0;  j < locationArray.length ; j++) {
       hourlyCookiesTotal += locationArray[j].cookiesSold[i]
     }
+    allHoursTotal += hourlyCookiesTotal;
     cell.textContent = hourlyCookiesTotal;
     footerRow.appendChild(cell);
   }
 
+  // add total for all locations
+  let hoursTotalCell = document.createElement('td');
+  hoursTotalCell.textContent = allHoursTotal;
+  footerRow.append(hoursTotalCell);
   table.appendChild(footerRow);
 }
 
