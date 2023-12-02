@@ -35,7 +35,7 @@ function headerFunction(table) {
 
   let cell = document.createElement('th');
   headerRow.appendChild(cell);
-
+  cell.textContent = ('Locations')
   for (let i = 0; i < hours.length; i++) {
     let headerCell = document.createElement('th');
     headerCell.textContent = hours[i];
@@ -49,6 +49,7 @@ function headerFunction(table) {
 
 // footer function
 function footerFunction(table) {
+
   let footerRow = document.createElement('tr');
   table.appendChild(footerRow);
 
@@ -59,12 +60,9 @@ function footerFunction(table) {
   for (let i = 0; i < hours.length + 1; i++) {
     let cell = document.createElement('td');
     let hourlyCookiesTotal = 0;
-    hourlyCookiesTotal += locationArray[0].cookiesSold[i];
-    hourlyCookiesTotal += locationArray[1].cookiesSold[i];
-    hourlyCookiesTotal += locationArray[2].cookiesSold[i];
-    hourlyCookiesTotal += locationArray[3].cookiesSold[i];
-    hourlyCookiesTotal += locationArray[4].cookiesSold[i];
-    
+    for (let j = 0;  j < locationArray.length ; j++) {
+      hourlyCookiesTotal += locationArray[j].cookiesSold[i]
+    }
     cell.textContent = hourlyCookiesTotal;
     footerRow.appendChild(cell);
   }
