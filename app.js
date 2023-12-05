@@ -19,12 +19,30 @@ let hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '
 
 // *** Global variables
 const locationArray = [];
+let salesForm = document.getElementById('new-store-data');
+
+
+//**** get form for event submission
+let NewStoreDataForm = document.getElementById('new-store-data');
 
 //*** Helper Function/Utilites
 function renderAll(table) {
   for (let i = 0; i < locationArray.length; i++) {
     locationArray[i].render(table);
   }
+}
+NewStoreDataForm.addEventListener('Submit Form', handleSubmit)
+//*** Form Submission, Event Listener & Handler
+
+function handleSubmit(event) {
+  event.preventDefault();
+  //get values from form
+  let newStoreData = event.target.newStoreData.value; 
+
+  //create location with input values
+  let newLocation = new Location (newStoreData, minCusty, maxCusty, averageCookieBought, customerNumber, cookiesSold, cookiesTotal)//*************************************************************************************you are here */
+  locationArray.push(newLocation);
+  newLocation.render();
 }
 
 // Header  functions
