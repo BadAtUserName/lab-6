@@ -20,7 +20,7 @@ let hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '
 // *** Global variables
 const locationArray = [];
 let newStoreSection = document.getElementById('new-store');
-
+let newLocation;
 
 //**** get form for event submission
 let NewStoreDataForm = document.getElementById('new-form');
@@ -31,6 +31,7 @@ function renderAll(table) {
   for (let i = 0; i < locationArray.length; i++) {
     locationArray[i].render(table);
   }
+  footerFunction(table);
 }
 
 //*** Form Submission, Event Listener & Handler
@@ -43,15 +44,14 @@ function handleSubmit(event) {
   let maxCusty = event.target.maxCusty.value;
   let averageCookieBought = event.target.averageCookieBought.value;
 
-  //*************************************************************************************you are here */
   //create location with input values
-  let newLocation = new Location (name, minCusty, maxCusty, averageCookieBought)
+  newLocation = new Location (name, minCusty, maxCusty, averageCookieBought)
   locationArray.push(newLocation);
   console.log(newLocation)
   newLocation.render(hourlySalesTable);
 }
 
-NewStoreDataForm.addEventListener('submit', handleSubmit)
+//NewStoreDataForm.addEventListener('submit', handleSubmit) *********8***********************************************
 
 // Header  functions
 function headerFunction(table) {
@@ -194,7 +194,7 @@ dubai.generateCookies();
 paris.generateCookies();
 lima.generateCookies();
 
-
+NewStoreDataForm.addEventListener('submit', handleSubmit)
 
 renderAll(hourlySalesTable);
 
