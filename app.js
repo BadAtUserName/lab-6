@@ -19,13 +19,39 @@ let hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '
 
 // *** Global variables
 const locationArray = [];
+let newStoreSection = document.getElementById('new-store');
+let newLocation;
+
+//**** get form for event submission
+let NewStoreDataForm = document.getElementById('new-form');
+let hourlySalesTable = document.createElement('table');
 
 //*** Helper Function/Utilites
 function renderAll(table) {
   for (let i = 0; i < locationArray.length; i++) {
     locationArray[i].render(table);
   }
+  footerFunction(table);
 }
+
+//*** Form Submission, Event Listener & Handler
+
+function handleSubmit(event) {
+  event.preventDefault();
+  //get values from form
+  let name = event.target.name.value;
+  let minCusty = event.target.minCusty.value;
+  let maxCusty = event.target.maxCusty.value;
+  let averageCookieBought = event.target.averageCookieBought.value;
+
+  //create location with input values
+  newLocation = new Location (name, minCusty, maxCusty, averageCookieBought)
+  locationArray.push(newLocation);
+  console.log(newLocation)
+  newLocation.render(hourlySalesTable);
+}
+
+//NewStoreDataForm.addEventListener('submit', handleSubmit) *********8***********************************************
 
 // Header  functions
 function headerFunction(table) {
@@ -35,7 +61,7 @@ function headerFunction(table) {
 
   let cell = document.createElement('th');
   headerRow.appendChild(cell);
-
+  cell.textContent = ('Locations')
   for (let i = 0; i < hours.length; i++) {
     let headerCell = document.createElement('th');
     headerCell.textContent = hours[i];
@@ -49,26 +75,34 @@ function headerFunction(table) {
 
 // footer function
 function footerFunction(table) {
+
   let footerRow = document.createElement('tr');
+  
   table.appendChild(footerRow);
 
+  // Add row label
   let cell = document.createElement('td');
-  cell.textConent = 'Totals';
+  cell.textContent = 'Totals';
   footerRow.appendChild(cell);
 
-  for (let i = 0; i < hours.length + 1; i++) {
+  let allHoursTotal = 0;
+
+  // make hour totals
+  for (let i = 0; i < hours.length; i++) {
     let cell = document.createElement('td');
     let hourlyCookiesTotal = 0;
-    hourlyCookiesTotal += locationArray[0].cookiesSold[i];
-    hourlyCookiesTotal += locationArray[1].cookiesSold[i];
-    hourlyCookiesTotal += locationArray[2].cookiesSold[i];
-    hourlyCookiesTotal += locationArray[3].cookiesSold[i];
-    hourlyCookiesTotal += locationArray[4].cookiesSold[i];
-    
+    for (let j = 0;  j < locationArray.length ; j++) {
+      hourlyCookiesTotal += locationArray[j].cookiesSold[i]
+    }
+    allHoursTotal += hourlyCookiesTotal;
     cell.textContent = hourlyCookiesTotal;
     footerRow.appendChild(cell);
   }
 
+  // add total for all locations
+  let hoursTotalCell = document.createElement('td');
+  hoursTotalCell.textContent = allHoursTotal;
+  footerRow.append(hoursTotalCell);
   table.appendChild(footerRow);
 }
 
@@ -147,10 +181,11 @@ let lima = new Location('Lima', 2, 16, 4.6, 0, [], 0);
 
 locationArray.push(seattle, tokyo, dubai, paris, lima);
 
-let table = document.createElement('table');
-salesdata.appendChild(table);
+
+
+salesdata.appendChild(hourlySalesTable);
 console.log(locationArray)
-headerFunction(table);
+headerFunction(hourlySalesTable);
 
 // Generate cookies first
 seattle.generateCookies();
@@ -159,272 +194,9 @@ dubai.generateCookies();
 paris.generateCookies();
 lima.generateCookies();
 
-renderAll(table);
+NewStoreDataForm.addEventListener('submit', handleSubmit)
 
-footerFunction(table)
-/*
-// ** object literals***
-let seattle = {
-  name: 'Seattle',
-  minCusty: 23,
-  maxCusty: 65,
-  averageCookieBought: 6.3,
-  customerNumber: 0,
-  cookiesSold: [],
-  cookiesTotal: 0,
-  //random cookie generator
-  generateCustomers: function(min, max){
-    return Math.floor(Math.random() * (max - min +1) + min)//inclusive of min max
-  },
-  getNumber: function () {
-    this.customerNumber = this.generateCustomers(this.minCusty, this.maxCusty);
-    return this.customerNumber;
-  },
+renderAll(hourlySalesTable);
 
+footerFunction(hourlySalesTable)
 
-//loop that goes though hours array and creates number of customers and multiplies cookies
-  render: function () {
-    for (let i = 0; i < hours.length; i++){
-  //let customers = generateCustomers(this.minCusty, this.maxCusty);
-      let cookies = (this.averageCookieBought * this.getNumber());
-      //console.log(cookies)
-      this.cookiesTotal += cookies
-      console.log(this.cookiesTotal)
-  //stick each random cookie number with a time
-      this.cookiesSold.push(cookies.toFixed(2))
-  }
-  console.log(this.cookiesSold)
-
-
-//Dom manipulation
-    let unorderedList = document.createElement('ul')
-    let storeName = document.createElement('p')
-    let salesDiv = document.getElementById("salesdata");
-//salesDiv.textContent = 'test'
-    salesDiv.appendChild(storeName)
-    salesDiv.appendChild(unorderedList)
-    storeName.textContent = this.name
-    for (let i = 0; i < hours.length; i++) {
-      let listItem = document.createElement('li')
-      listItem.textContent = `${hours[i]}: ${this.cookiesSold[i]} cookies`
-      unorderedList.appendChild(listItem)
-  }
-  let cookiesTotal = document.createElement('li');
-  cookiesTotal.textContent = `Total cookie Sales:  ${this.cookiesTotal}
-  `;
-  unorderedList.appendChild(cookiesTotal)
-}
-}
-
-let tokyo = {
-  name: 'Tokyo',
-  minCusty: 3,
-  maxCusty: 24,
-  averageCookieBought: 1.2,
-  customerNumber: 0,
-  cookiesSold: [],
-  cookiesTotal: 0,
-  //random cookie generator
-  generateCustomers: function(min, max){
-    return Math.floor(Math.random() * (max - min +1) + min)//inclusive of min max
-  },
-  getNumber: function () {
-    this.customerNumber = this.generateCustomers(this.minCusty, this.maxCusty);
-    return this.customerNumber;
-  },
-
-
-//loop that goes though hours array and creates number of customers and multiplies cookies
-  render: function () {
-    for (let i = 0; i < hours.length; i++){
-  //let customers = generateCustomers(this.minCusty, this.maxCusty);
-      let cookies = (this.averageCookieBought * this.getNumber());
-      console.log(cookies)
-      this.cookiesTotal += cookies
-      console.log(this.cookiesTotal)
-  //stick each random cookie number with a time
-      this.cookiesSold.push(cookies.toFixed(2))
-  }
-  console.log(this.cookiesSold)
-
-
-//Dom manipulation
-    let unorderedList = document.createElement('ul')
-    let storeName = document.createElement('p')
-    let salesDiv = document.getElementById("salesdata");
-//salesDiv.textContent = 'test'
-    salesDiv.appendChild(storeName)
-    salesDiv.appendChild(unorderedList)
-    storeName.textContent = this.name
-    for (let i = 0; i < hours.length; i++) {
-      let listItem = document.createElement('li')
-      listItem.textContent = `${hours[i]}: ${this.cookiesSold[i]} cookies`
-      unorderedList.appendChild(listItem)
-  }
-  let cookiesTotal = document.createElement('li');
-  cookiesTotal.textContent = `Total cookie Sales:  ${this.cookiesTotal}
-  `;
-  unorderedList.appendChild(cookiesTotal)
-}
-}
-let dubai = {
-  name: 'Dubai',
-  minCusty: 11,
-  maxCusty: 38,
-  averageCookieBought: 3.7,
-  customerNumber: 0,
-  cookiesSold: [],
-  cookiesTotal: 0,
-  //random cookie generator
-  generateCustomers: function(min, max){
-    return Math.floor(Math.random() * (max - min +1) + min)//inclusive of min max
-  },
-  getNumber: function () {
-    this.customerNumber = this.generateCustomers(this.minCusty, this.maxCusty);
-    return this.customerNumber;
-  },
-
-
-//loop that goes though hours array and creates number of customers and multiplies cookies
-  render: function () {
-    for (let i = 0; i < hours.length; i++){
-  //let customers = generateCustomers(this.minCusty, this.maxCusty);
-      let cookies = (this.averageCookieBought * this.getNumber());
-      console.log(cookies)
-      this.cookiesTotal += cookies
-      console.log(this.cookiesTotal)
-  //stick each random cookie number with a time
-      this.cookiesSold.push(cookies.toFixed(2))
-  }
-  console.log(this.cookiesSold)
-
-
-//Dom manipulation
-    let unorderedList = document.createElement('ul')
-    let storeName = document.createElement('p')
-    let salesDiv = document.getElementById("salesdata");
-//salesDiv.textContent = 'test'
-    salesDiv.appendChild(storeName)
-    salesDiv.appendChild(unorderedList)
-    storeName.textContent = this.name
-    for (let i = 0; i < hours.length; i++) {
-      let listItem = document.createElement('li')
-      listItem.textContent = `${hours[i]}: ${this.cookiesSold[i]} cookies`
-      unorderedList.appendChild(listItem)
-  }
-  let cookiesTotal = document.createElement('li');
-  cookiesTotal.textContent = `Total cookie Sales:  ${this.cookiesTotal}
-  `;
-  unorderedList.appendChild(cookiesTotal)
-}
-}
-let paris = {
-  name: 'Paris',
-  minCusty: 20,
-  maxCusty: 38,
-  averageCookieBought: 2.3,
-  customerNumber: 0,
-  cookiesSold: [],
-  cookiesTotal: 0,
-  //random cookie generator
-  generateCustomers: function(min, max){
-    return Math.floor(Math.random() * (max - min +1) + min)//inclusive of min max
-  },
-  getNumber: function () {
-    this.customerNumber = this.generateCustomers(this.minCusty, this.maxCusty);
-    return this.customerNumber;
-  },
-
-
-//loop that goes though hours array and creates number of customers and multiplies cookies
-  render: function () {
-    for (let i = 0; i < hours.length; i++){
-  //let customers = generateCustomers(this.minCusty, this.maxCusty);
-      let cookies = (this.averageCookieBought * this.getNumber());
-      console.log(cookies)
-      this.cookiesTotal += cookies
-      console.log(this.cookiesTotal)
-  //stick each random cookie number with a time
-      this.cookiesSold.push(cookies.toFixed(2))
-  }
-  console.log(this.cookiesSold)
-
-
-//Dom manipulation
-    let unorderedList = document.createElement('ul')
-    let storeName = document.createElement('p')
-    let salesDiv = document.getElementById("salesdata");
-//salesDiv.textContent = 'test'
-    salesDiv.appendChild(storeName)
-    salesDiv.appendChild(unorderedList)
-    storeName.textContent = this.name
-    for (let i = 0; i < hours.length; i++) {
-      let listItem = document.createElement('li')
-      listItem.textContent = `${hours[i]}: ${this.cookiesSold[i]} cookies`
-      unorderedList.appendChild(listItem)
-  }
-  let cookiesTotal = document.createElement('li');
-  cookiesTotal.textContent = `Total cookie Sales:  ${this.cookiesTotal}
-  `;
-  unorderedList.appendChild(cookiesTotal)
-}
-}
-let lima = {
-  name: 'Lima',
-  minCusty: 2,
-  maxCusty: 16,
-  averageCookieBought: 4.6,
-  customerNumber: 0,
-  cookiesSold: [],
-  cookiesTotal: 0,
-  //random cookie generator
-  generateCustomers: function(min, max){
-    return Math.floor(Math.random() * (max - min +1) + min)//inclusive of min max
-  },
-  getNumber: function () {
-    this.customerNumber = this.generateCustomers(this.minCusty, this.maxCusty);
-    return this.customerNumber;
-  },
-
-
-//loop that goes though hours array and creates number of customers and multiplies cookies
-  render: function () {
-    for (let i = 0; i < hours.length; i++){
-  //let customers = generateCustomers(this.minCusty, this.maxCusty);
-      let cookies = (this.averageCookieBought * this.getNumber());
-      console.log(cookies)
-      this.cookiesTotal.toFixed(2) += cookies
-      console.log(this.cookiesTotal)
-  //stick each random cookie number with a time
-      this.cookiesSold.push(cookies.toFixed(2))
-  }
-  console.log(this.cookiesSold)
-
-
-//Dom manipulation
-    let unorderedList = document.createElement('ul')
-    let storeName = document.createElement('p')
-    let salesDiv = document.getElementById("salesdata");
-//salesDiv.textContent = 'test'
-    salesDiv.appendChild(storeName)
-    salesDiv.appendChild(unorderedList)
-    storeName.textContent = this.name
-    for (let i = 0; i < hours.length; i++) {
-      let listItem = document.createElement('li')
-      listItem.textContent = `${hours[i]}: ${this.cookiesSold[i]} cookies`
-      unorderedList.appendChild(listItem)
-  }
-  let cookiesTotal = document.createElement('li');
-  cookiesTotal.textContent = `Total cookie Sales:  ${this.cookiesTotal}
-  `;
-  unorderedList.appendChild(cookiesTotal)
-}
-}
-*/
-/*seattle.render();
-tokyo.render();
-dubai.render();
-paris.render();
-lima.render();*/
-
-//headerFunction();

@@ -12,11 +12,35 @@
   <body>
     <header>
       <h1>Salmon Cookies</h1> 
-      <nav class="NavPg2"><a href="index.html">Home</a></nav>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+        </ul>
+      </nav>  
     </header>
     <main>
+      <h2>Add another store to the table!</h2>
+      <section id="new-store"></section>
       <section id="cookiesForm"></section>
       <div id="salesdata">
+        <form id="new-form">
+          <fieldset>
+            <legend>Add New Store Data</legend>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name">
+  
+            <label for="minCusty">Minimum Customers</label>
+            <input type="number" id="minCusty" name="minCusty">
+  
+            <label for="maxCusty">Maximum Customers</label>
+            <input type="number" id="maxCusty" name="maxCusty">
+  
+            <label for="averageCookieBought">Average Number Of Cookies Bought</label>
+            <input type="number" id="averageCookieBought" name="averageCookieBought">
+
+          </fieldset>
+          <button type="submit">Submit Form</button>
+        </form>
       </div>
     </main>
     <footer>
