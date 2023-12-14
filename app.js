@@ -20,6 +20,7 @@ let hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '
 // *** Global variables
 const locationArray = [];
 let newStoreSection = document.getElementById('new-store');
+let salesdata = document.getElementById('sales-data');
 let newLocation;
 
 //**** get form for event submission
@@ -27,11 +28,10 @@ let NewStoreDataForm = document.getElementById('new-form');
 let hourlySalesTable = document.createElement('table');
 
 //*** Helper Function/Utilites
-function renderAll(table) {
+function renderStoreRows(table) {
   for (let i = 0; i < locationArray.length; i++) {
     locationArray[i].render(table);
   }
-  footerFunction(table);
 }
 
 //*** Form Submission, Event Listener & Handler
@@ -40,15 +40,19 @@ function handleSubmit(event) {
   event.preventDefault();
   //get values from form
   let name = event.target.name.value;
-  let minCusty = event.target.minCusty.value;
-  let maxCusty = event.target.maxCusty.value;
-  let averageCookieBought = event.target.averageCookieBought.value;
+  let minCusty = parseInt(event.target.minCusty.value);
+  let maxCusty = parseInt(event.target.maxCusty.value);
+  let averageCookieBought = parseFloat(event.target.averageCookieBought.value);
 
   //create location with input values
-  newLocation = new Location (name, minCusty, maxCusty, averageCookieBought)
+  newLocation = new Location (name, minCusty, maxCusty, averageCookieBought);
+  newLocation.generateCookies();
   locationArray.push(newLocation);
-  console.log(newLocation)
-  newLocation.render(hourlySalesTable);
+  //console.log(newLocation)
+  //newLocation.render(hourlySalesTable);
+  //footerFunction(hourlySalesTable);
+  //renderSalesTable(hourlySalesTable)
+  rebuildSalesTables();
 }
 
 //NewStoreDataForm.addEventListener('submit', handleSubmit) *********8***********************************************
@@ -106,14 +110,28 @@ function footerFunction(table) {
   table.appendChild(footerRow);
 }
 
-//footerFunction(table);
+let rebuildSalesTables = function() {
+  //remove old table from dom
+    hourlySalesTable.remove();
+    //create new table
+    hourlySalesTable = document.createElement("table");
+    //render new table
+    renderSalesTable(hourlySalesTable);
+    //add new table to dom #sales-data div
+    salesdata.appendChild(hourlySalesTable);
+}
+let renderSalesTable = function(table) {
+  headerFunction(table);
+  renderStoreRows(table);
+  footerFunction(table)
+}
 
 // *** Constuctor Function***
 function Location(name, minCusty, maxCusty, averageCookieBought, customerNumber) {
   this.name = name;
-  this.minCusty = minCusty;
-  this.maxCusty = maxCusty;
-  this.averageCookieBought = averageCookieBought;
+  this.minCusty = parseInt(minCusty);
+  this.maxCusty = parseInt(maxCusty);
+  this.averageCookieBought = parseFloat(averageCookieBought);
   this.customerNumber = customerNumber;
   this.cookiesSold = [];
   this.cookiesTotal = 0
@@ -178,14 +196,12 @@ let tokyo = new Location('Tokyo', 2, 24, 1.2, 0, [], 0);
 let dubai = new Location('Dubai', 11, 38, 3.7, 0, [], 0);
 let paris = new Location('Paris', 20, 38, 2.3, 0, [], 0);
 let lima = new Location('Lima', 2, 16, 4.6, 0, [], 0);
-
 locationArray.push(seattle, tokyo, dubai, paris, lima);
 
 
 
 salesdata.appendChild(hourlySalesTable);
 console.log(locationArray)
-headerFunction(hourlySalesTable);
 
 // Generate cookies first
 seattle.generateCookies();
@@ -196,7 +212,5 @@ lima.generateCookies();
 
 NewStoreDataForm.addEventListener('submit', handleSubmit)
 
-renderAll(hourlySalesTable);
 
-footerFunction(hourlySalesTable)
-
+renderSalesTable(hourlySalesTable)
