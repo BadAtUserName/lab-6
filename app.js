@@ -45,7 +45,7 @@ function handleSubmit(event) {
   let averageCookieBought = parseFloat(event.target.averageCookieBought.value);
 
   //create location with input values
-  newLocation = new Location (name, minCusty, maxCusty, averageCookieBought);
+  newLocation = new Location(name, minCusty, maxCusty, averageCookieBought);
   newLocation.generateCookies();
   locationArray.push(newLocation);
   //console.log(newLocation)
@@ -65,7 +65,7 @@ function headerFunction(table) {
 
   let cell = document.createElement('th');
   headerRow.appendChild(cell);
-  cell.textContent = ('Locations')
+  cell.textContent = ('Locations');
   for (let i = 0; i < hours.length; i++) {
     let headerCell = document.createElement('th');
     headerCell.textContent = hours[i];
@@ -73,7 +73,7 @@ function headerFunction(table) {
   }
   let totalsHeaderCell = document.createElement('th');
   totalsHeaderCell.textContent = 'Daily Location Totals';
-  headerRow.appendChild(totalsHeaderCell)
+  headerRow.appendChild(totalsHeaderCell);
 }
 
 
@@ -81,7 +81,7 @@ function headerFunction(table) {
 function footerFunction(table) {
 
   let footerRow = document.createElement('tr');
-  
+
   table.appendChild(footerRow);
 
   // Add row label
@@ -95,8 +95,8 @@ function footerFunction(table) {
   for (let i = 0; i < hours.length; i++) {
     let cell = document.createElement('td');
     let hourlyCookiesTotal = 0;
-    for (let j = 0;  j < locationArray.length ; j++) {
-      hourlyCookiesTotal += locationArray[j].cookiesSold[i]
+    for (let j = 0; j < locationArray.length; j++) {
+      hourlyCookiesTotal += locationArray[j].cookiesSold[i];
     }
     allHoursTotal += hourlyCookiesTotal;
     cell.textContent = hourlyCookiesTotal;
@@ -110,21 +110,21 @@ function footerFunction(table) {
   table.appendChild(footerRow);
 }
 
-let rebuildSalesTables = function() {
+let rebuildSalesTables = function () {
   //remove old table from dom
-    hourlySalesTable.remove();
-    //create new table
-    hourlySalesTable = document.createElement("table");
-    //render new table
-    renderSalesTable(hourlySalesTable);
-    //add new table to dom #sales-data div
-    salesdata.appendChild(hourlySalesTable);
-}
-let renderSalesTable = function(table) {
+  hourlySalesTable.remove();
+  //create new table
+  hourlySalesTable = document.createElement('table');
+  //render new table
+  renderSalesTable(hourlySalesTable);
+  //add new table to dom #sales-data div
+  salesdata.appendChild(hourlySalesTable);
+};
+let renderSalesTable = function (table) {
   headerFunction(table);
   renderStoreRows(table);
-  footerFunction(table)
-}
+  footerFunction(table);
+};
 
 // *** Constuctor Function***
 function Location(name, minCusty, maxCusty, averageCookieBought, customerNumber) {
@@ -134,12 +134,12 @@ function Location(name, minCusty, maxCusty, averageCookieBought, customerNumber)
   this.averageCookieBought = parseFloat(averageCookieBought);
   this.customerNumber = customerNumber;
   this.cookiesSold = [];
-  this.cookiesTotal = 0
+  this.cookiesTotal = 0;
 }
 
 //***Prototype function***
 Location.prototype.generateCustomers = function (min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min)
+  return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
 Location.prototype.getNumber = function () {
@@ -150,31 +150,31 @@ Location.prototype.generateCookies = function () {
   for (let i = 0; i < hours.length; i++) {
     //let customers = generateCustomers(this.minCusty, this.maxCusty);
     let cookies = (this.averageCookieBought * this.getNumber());
-  
+
     //console.log(cookies)
     this.cookiesTotal += cookies;
-    //console.log(this.cookiesTotal) 
-    //stick each random cookie number with a time 
-    this.cookiesSold.push(Math.ceil(cookies))
+    //console.log(this.cookiesTotal)
+    //stick each random cookie number with a time
+    this.cookiesSold.push(Math.ceil(cookies));
   }
-}
+};
 
 Location.prototype.render = function (table) {
 
   // row for location
   let locationRow = document.createElement('tr');
 
-  let name = document.createElement("td");
+  let name = document.createElement('td');
   name.textContent = this.name;
   locationRow.appendChild(name);
 
   for (let i = 0; i < hours.length; i++) {
     for (let j = 0; j < locationArray.length; j++) {
-      console.log(locationArray[j].name)
-      console.log('location array is:', locationArray)
+      console.log(locationArray[j].name);
+      console.log('location array is:', locationArray);
       let cookiesThisHour = locationArray[j].cookiesSold[i];
-      console.log('i is',i)
-      console.log(cookiesThisHour)
+      console.log('i is', i);
+      console.log(cookiesThisHour);
     }
     let tableItem = document.createElement('td');
     let content = `${this.cookiesSold[i]}`;
@@ -201,7 +201,7 @@ locationArray.push(seattle, tokyo, dubai, paris, lima);
 
 
 salesdata.appendChild(hourlySalesTable);
-console.log(locationArray)
+console.log(locationArray);
 
 // Generate cookies first
 seattle.generateCookies();
@@ -210,7 +210,7 @@ dubai.generateCookies();
 paris.generateCookies();
 lima.generateCookies();
 
-NewStoreDataForm.addEventListener('submit', handleSubmit)
+NewStoreDataForm.addEventListener('submit', handleSubmit);
 
 
-renderSalesTable(hourlySalesTable)
+renderSalesTable(hourlySalesTable);
