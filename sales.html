@@ -6,22 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!link rel="stylesheet" href="css/reset.css"-->
     <link rel="'stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Righteous">
     <title>Salmon Cookies</title>
     <link href="style.css" type="text/css" rel="stylesheet">
   </head>
   <body>
     <header>
-      <h1>Salmon Cookies</h1> 
+      <h1>Welcome to Pat's Salmon Cookies</h1> 
       <nav>
         <ul>
           <li><a href="index.html">Home</a></li>
+          <li><a href="sales.html">Sales Data</a></li>
+          <li><a href="about.html">About Us</a></li>
         </ul>
       </nav>  
     </header>
     <main>
       <h2>Add another store to the table!</h2>
-      <section id="new-store"></section>
-      <section id="cookiesForm"></section>
+      <div class="about">
+        <p>Fill in blanks with glee, dot the i's, and cross the t's. Toss in attachments for flair. Hit the "Submit" party button. High-five your screen. Await digital confetti or a friendly follow-up.</p>
+      </div>
+      <!--<section id="new-store"></section>-->
+     <!--<section id="cookiesForm"></section>--> 
       <div id="sales-data">
         <form id="new-form">
           <fieldset>
@@ -37,13 +43,16 @@
   
             <label for="averageCookieBought">Average Number Of Cookies Bought</label>
             <input type="number" id="averageCookieBought" name="averageCookieBought">
-
+            <button type="submit">Submit Form</button>
           </fieldset>
-          <button type="submit">Submit Form</button>
         </form>
       </div>
+      <img id="blueSalmon"src="images/image-assets/fish.jpg">
     </main>
     <footer>
+      <div id="HQ-info">
+        <p>HQ info! <img id="frosted-cookie" src="images/image-assets/frosted-cookie.jpg" alt="cookie cutter image" > This is where we live come on over it will be a whale of a time.</p>
+      </div>
       <script src="app.js"></script>
     </footer>
   </body>

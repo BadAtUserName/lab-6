@@ -1,8 +1,16 @@
+body {
+  background-color: lightblue;
+}
+
+h1, h2, h3, h4, h5, h6 {
+ font-family: Righteous, sans-serif;
+}
+
 header{
-  background-color: black;
+  background-color: lightpink;
   color: salmon;
   /* display: flex; */
-  justify-content: center;
+  text-align: center;
 }
 nav ul{
   /* display: flex; */
@@ -11,6 +19,7 @@ nav ul{
   padding: 0;
   margin: 0;
   background-color: salmon;
+  
 }
 nav ul li {
   display: inline-block; 
@@ -24,20 +33,88 @@ main img {
   margin-right: auto;
   width: 75%;
 }
-
-.LocationList {
-  margin: 3em;
+h1 {
+  font-weight: 800;
+  font-size: 3em;
+  text-align: center;
 }
+
+.about {
+  font-size: 1.1em;
+}
+
+/*image to be resized*/
+#merch-text {
+  font-size: 1.1em;
+}
+
+#t-shirtMerch {
+  width: 100px;
+  height: 120px;
+  float: right;
+}
+
+/*.LocationList {
+  margin: 3em;
+}*/
 table,th, td {
-  background-color: salmon;
+  background-color: lightpink;
+  padding: 5px;
   border: 1px solid;
   border-collapse: collapse ;
   border-color: black;
+  margin-left: auto;
+  margin-right: auto;
   
 }
+
+#new-form {
+  width: 100%;
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+}
 #cookiesForm{
-display: block;
+display: inline;
 margin-top: 40px;
 margin-left: 40px;
 margin-right: 40px;
+}
+
+#blueSalmon{
+  width: 500px;
+  height: 200px;
+  padding-top: 20px;
+}
+
+
+#cutterLeft {
+  display: inline-block;
+  padding-top: 10px;
+  padding-right: 10px;
+  width: 50px;
+  height: 50px;
+}
+
+#cutterRight {
+  display: inline;
+  padding-top: 10px;
+  width: 50px;
+  height: 50px;
+}
+
+#familyPhoto {
+  padding-top: 20px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#HQ-info {
+  font-size: .9rem;
+  text-align: center;
+}
+#frosted-cookie {
+  width: 20px;
+  margin-top: 5px;
+  padding: 10px 10px;
 }
